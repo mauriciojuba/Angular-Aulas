@@ -1,0 +1,58 @@
+<div class="container">
+
+    <form [formGroup]="meuForm" class="row" (submit)="cadastrar($event)" >
+        <!--//----Validando por Modelo
+            usamos o [formGroup] para ligar o nosso grupo de formulário, préviamente criado em cadastro.component.ts
+            
+            //----Validando por Template
+            usando o "()" com um evento entre eles podemos declarar o que irá acontecer quando o formulário for 
+        submited, chamamos o método cadastrar passando o evento de parâmetro, para previnir que ele tenha o comportamento
+        default, que é recarregar a aplicação.-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Título</label>
+                <input 
+                formControlName="titulo"
+                name="titulo"
+                [(ngModel)]="foto.titulo" 
+                class="form-control"  
+                autocomplete="off">
+                <!-- //----Validando por Modelo
+                    Usamos o formControlName passando a variável de validação, definida na criação do grupo.
+                    
+                    //---- Validando por Template
+                    para fazer validação de formulário dentro do template, devemos definir uma variável local que segura o 
+                ngModel, e testamos logo abaixo com o *ngIf-->
+                <span *ngIf="meuForm.controls.titulo.invalid" class="form-control alert-danger">
+                    <!--//Validação por Modelo - Usamos meuForm.controls.xxxx para validar. -->
+                    Título obrigatório
+                </span>
+            </div>
+            <div class="form-group">
+                <label>URL</label>
+                <input
+                formControlName="url"
+                name="url"
+                [(ngModel)]="foto.url"
+                class="form-control" 
+                autocomplete="off">
+                <span *ngIf="meuForm.controls.url.invalid" class="form-control alert-danger">
+                    Título obrigatório
+                </span>
+            </div>
+            <div class="form-group">
+                <label>Descrição</label>
+                <!-- outra forma bem mais prática de fazer essa acossiação (binding) é usando o [(ngModel)]
+                Mas para usá-lo devemos importar o modulo FormModule no appModule e dar um "name" para cada campo. -->
+                <textarea formControlName="descricao" name="descricao" [(ngModel)]="foto.descricao" class="form-control"  autocomplete="off">
+                </textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="meuForm.invalid">
+                Salvar
+            </button>
+             <a [routerLink]="['']" class="btn btn-primary">Voltar</a>
+            <hr>
+        </div>
+    </form>
+</div>
