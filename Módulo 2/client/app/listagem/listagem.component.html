@@ -1,0 +1,33 @@
+<div class="jumbotron">
+    <h1 class="text-center">Alurapic</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+                 <div class="input-group">
+                    <span class="input-group-btn">
+                        <a [routerLink]="['/cadastro']" class="btn btn-primary">
+                        <!--routerLink é como se fosse o href, mas ao inves de carregar toda a aplicação
+                        novamente, ele vai apenas carregar o componente a partir da rota -->
+                            Nova foto
+                        </a>
+                    </span>
+                    <input #textoProcurado (keyup)="0" class="form-control" placeholder="filtrar pelo título da foto">
+                    <!--usando o '#' conseguimos declarar uma variável local para usarmos em qualquer lugar do nosso
+                    template.
+                    o padrão do angular é renderizar a view toda vez que um evento assincrono é chamado. Por isso precisamos
+                    chamar o evento keyup para que toda vez que soltarmos uma tecla ele renderiza novamente.-->
+                </div> 
+            </form>
+        </div> <!-- fim col-md-12 -->
+    </div> <!-- fim row -->
+    <br>
+    <div class="row">
+        <!--*ngFor é uma espécie de for dentro do html do component-->
+        <painel *ngFor="let foto of fotos | filtroPorTitulo:textoProcurado.value" titulo="{{foto.titulo | uppercase}}" class="col-md-2">
+            <!--Usando o PIPE '|' podemos passar instruções ou até mesmo funções para lidar com os dados exibidos.-->
+            <foto url="{{foto.url}}" titulo="{{foto.titulo}}"></foto>
+        </painel>
+    </div>
+</div>
