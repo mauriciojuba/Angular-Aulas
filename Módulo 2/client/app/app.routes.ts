@@ -7,6 +7,7 @@ const appRoutes: Routes = [//criamos um array do tipo routes que será onde fica
     //e dentro dele declaramos todas as rotas, passando o final do URL e o componente que será carregado.
     { path: '', component: ListagemComponent },
     { path: 'cadastro', component: CadastroComponent},
+    { path: 'cadastro/:id', component: CadastroComponent},
     { path: '**', component: ListagemComponent }
 ]; 
 

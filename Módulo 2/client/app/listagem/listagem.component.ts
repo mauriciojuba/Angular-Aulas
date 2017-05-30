@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
-import{Http} from "@angular/http"; //inclui o serviço de Http par fazer requisições ao Back-End
+import {FotoService} from "../foto/foto.service";
+import {FotoComponent} from "../foto/foto.component";
 
 @Component({
     moduleId: module.id,
@@ -9,10 +10,20 @@ import{Http} from "@angular/http"; //inclui o serviço de Http par fazer requisi
 
 export class ListagemComponent{
     fotos: Object[] = [];
-    constructor(http:Http){
-        http.get("v1/fotos")//usando o metodo get nós fazemos uma requisiçao para o backend e pegamos o conteúdo de v1/fotos
-        .subscribe(res =>{//observamos a requisição e usamos uma função (arrow function) para lidar com sua resposta
-            this.fotos = res.json(); //recebe o resultado transformado em uma estrutura json.
+    service:FotoService;
+    constructor(service:FotoService){
+        this.service = service;
+        this.service.lista().subscribe(res =>{//usando o método dentro do serviço criado temos o mesmo resultaod.
+            this.fotos = res.json(); 
+        });
+    }
+
+    remove(foto:FotoComponent){
+        this.service.remove(foto).subscribe(()=>{ //ao remover uma foto do servidor o angular não entende que deve recarregar a lista.
+                    let novasFotos = this.fotos.slice(0); //ao invés de fazer uma nova requisição ao banco para trazer todas as fotos
+                    let indice = novasFotos.indexOf(foto); // usando o listar() do serviço, nós criamos um novo array com as que já
+                    novasFotos.splice(indice, 1);//estão lá e nesse novo array excluimos a que clicamos, daí passamos esse novo array
+                    this.fotos = novasFotos;// para as fotos. O que faz com que o Angular recarregue os objetos.
         });
     }
 }
