@@ -1,0 +1,23 @@
+
+<h1>To-Do List:</h1>
+
+<div *ngIf="AppState == 'default'">
+  <h3>Add To-Do</h3>
+  <form (submit)='addToDo()'>
+    <input name='newtodo' type='text' [(ngModel)]="text">
+    <button>Add</button>
+  </form>
+</div>
+<div *ngIf="AppState == 'edit'">
+  <h3>Modify To-Do</h3>
+  <form (submit)='updateToDo()'>
+    <input name='update' type='text' [(ngModel)]="text">
+    <button>Modify</button>
+  </form>
+</div>
+
+<ul>
+  <li *ngFor ='let todo of todos'>
+    {{todo.text}} <button (click)='editToDo(todo)'> Update </button><button (click)='deleteToDo(todo.text)'> Delete </button>
+  </li>
+</ul>
